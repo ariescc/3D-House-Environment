@@ -4,7 +4,38 @@
 #include <OpenGl/glu.h>
 #include <GLUT/glut.h>
 
-void axis(double length)
+
+void xaxis(double length)
+{
+    // draw a x-axis
+    glPushMatrix();
+    glBegin(GL_LINES);
+    glVertex3d(0, 0, 0);
+    glVertex3d(length,0,0); // along the x-axis
+    glEnd();
+    glTranslated(length -0.2, 0,0);
+    glRotated(90, 0, 1, 0);
+    glutWireCone(0.04, 0.2, 12, 9);
+    glPopMatrix();
+    
+}
+
+void yaxis(double length)
+{
+    // draw a z-axis
+    glPushMatrix();
+    glBegin(GL_LINES);
+    glVertex3d(0, 0, 0);
+    glVertex3d(0,length,0); // along the z-axis
+    glEnd();
+    glTranslated(0, length -0.2,0);
+    glRotated(-90, 1, 0, 0);
+    glutWireCone(0.04, 0.2, 12, 9);
+    glPopMatrix();
+    
+}
+
+void zaxis(double length)
 {
     // draw a z-axis
     glPushMatrix();
@@ -18,27 +49,46 @@ void axis(double length)
     
 }
 
+
+void wall(double thickness)
+{
+    glPushMatrix();
+    glTranslated(0.5,.5*thickness,0.5);
+    glScaled(1.0,thickness,1.0);
+    glutSolidCube(1);
+    glPopMatrix();
+}
+
 void Initialize() {
     glMatrixMode(GL_PROJECTION); // set the view volume shape
     glLoadIdentity();
-    glOrtho(-2.0*10/6.0, 2.0*10/6.0, -2.0, 2.0, 0.1, 100);
+    glOrtho(-10,10,-10,10,-10,10);
+    gluPerspective(60, 1, 0, 20);
     glMatrixMode(GL_MODELVIEW); // position and aim the camera
     glLoadIdentity();
-    gluLookAt(1.0,1.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+//    gluLookAt(0,0,1, 0,0,0, 0.0,1.0,0.0); //look through z-axis
+//    gluLookAt(1,0,0, 0,0,0, 0.0,1.0,0.0); //look through x-axis
+//    gluLookAt(0,1,0, 0,0,0, 0.0,1.0,0.0); //look through y-axis
+    gluLookAt(1,1,1, 0,0,0, 0.0,1.0,0.0); //look 3D
+
     glClear(GL_COLOR_BUFFER_BIT);
-    glTranslatef(-1.5f, 1.0f, .75f);
+    
+    glPushMatrix();
+    //draw x-axis in green
+    glColor3d(0,1,0);
+    xaxis(10.0);
+    glPopMatrix();
+    
+    glPushMatrix();
+    //draw y-axis in blue
+    glColor3d(0,0,1);
+    yaxis(10.0);
+    glPopMatrix();
+
     glPushMatrix();
     //draw z-axis in red
     glColor3d(1,0,0);
-    axis(2.0);
-    //draw x-axis in green
-    glColor3d(0,1,0);
-    glRotated(90, 0,1.0, 0);
-    axis(4.0);
-    //draw y-axis in blue
-    glColor3d(0,0,1);
-    glRotated(-90.0, 1, 0, 0);
-    axis(1.0);
+    zaxis(10.0);
     glPopMatrix();
 }
 
@@ -46,13 +96,69 @@ void DrawGround() {
     glPushMatrix();
     glBegin(GL_QUADS);
     glColor3d(0.0, .390625, 0.0);
-    glVertex3d(0.1, 0, 0.1);
-    glVertex3d(3.0, 0, 0.1);
-    glVertex3d(3.0, 0, 2.0);
-    glVertex3d(0.1, 0, 2.0);
+    glVertex3d(0.0, 0, 0.0);
+    glVertex3d(8.0, 0, 0.0);
+    glVertex3d(8.0, 0, 8.0);
+    glVertex3d(0.0, 0, 8.0);
     glEnd();
     glPopMatrix();
+}
+
+void DrawWalls() {
+    glPushMatrix();
+    glTranslated(1.5, 0, 0);
+
+    //draw floor
+    glPushMatrix();
+    glColor3d(.625, .3203125, .17578125);
+    glScaled(4,1,4);
+    wall(.05);
+    glPopMatrix();
     
+    //draw back wall
+    glPushMatrix();
+    glColor3d(.82421875, .82421875, .82421875);
+    glRotated(-90, 1, 0, 0);
+    glScaled(4,1,3);
+    wall(.05);
+    glPopMatrix();
+
+    //draw left wall
+    glPushMatrix();
+    glColor3d(2, .82421875, .82421875);
+    glRotated(90, 0, 0, 1);
+    glScaled(3,1,4);
+    wall(.05);
+    glPopMatrix();
+
+    //draw right wall
+    glPushMatrix();
+    glColor3d(2, .82421875, .82421875);
+    glRotated(90, 0, 0, 1);
+    glScaled(3,1,4);
+    glTranslated(0, -4, 0);
+    wall(.05);
+    glPopMatrix();
+    
+    //draw front wall
+    glPushMatrix();
+    glColor3d(.82421875, .82421875, .82421875);
+    glRotated(-90, 1, 0, 0);
+    glScaled(1.5,1,3);
+    glTranslated(0, -4, 0);
+    wall(.05);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3d(.82421875, .82421875, .82421875);
+    glRotated(-90, 1, 0, 0);
+    glScaled(1.5,1,3);
+    glTranslated(1.6, -4, 0);
+    wall(.05);
+    glPopMatrix();
+    
+    glPopMatrix();
+
 }
 
 void keyboard(unsigned char key, int x, int y) {
@@ -63,6 +169,7 @@ void keyboard(unsigned char key, int x, int y) {
 void Display() {
     Initialize();
     DrawGround();
+    DrawWalls();
     glFlush();
 }
 
@@ -75,7 +182,6 @@ int main(int argc, char ** argv) {
     glutDisplayFunc(Display);
     glClearColor(1.0f,1.0f,1.0f,1.0f);
     glutKeyboardFunc(keyboard);
-    gluOrtho2D(0.0,1000.0,0.0,600.0);
     glutMainLoop();
     return 0;
 }
