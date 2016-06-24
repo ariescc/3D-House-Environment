@@ -66,10 +66,10 @@ void Initialize() {
     gluPerspective(60.0, 1.0, 0.0, 20.0);
     glMatrixMode(GL_MODELVIEW); // position and aim the camera
     glLoadIdentity();
-//    gluLookAt(0.0,0.0,1.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through z-axis
+    gluLookAt(0.0,0.0,1.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through z-axis
 //    gluLookAt(1.0,0.0,0.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through x-axis
 //    gluLookAt(0.0,1.0,0.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through y-axis
-    gluLookAt(1.0,1.0,1.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look 3D
+//    gluLookAt(1.0,1.0,1.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look 3D
 
     glClear(GL_COLOR_BUFFER_BIT);
     
@@ -156,6 +156,15 @@ void DrawWalls() {
     glTranslated(1.6, -4.0, 0.0);
     wall(.05);
     glPopMatrix();
+    
+    //draw ceiling
+    glPushMatrix();
+    glColor3d(.625, .3203125, .17578125);
+    glScaled(4.0,1.0,4.0);
+    glTranslated(0.0, 3.0, 0.0);
+    wall(.05);
+    glPopMatrix();
+    
     
     glPopMatrix();
 
