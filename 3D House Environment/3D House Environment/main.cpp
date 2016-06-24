@@ -4,6 +4,9 @@
 #include <OpenGl/glu.h>
 #include <GLUT/glut.h>
 
+double camerax = 20.0;
+double cameray = 20.0;
+double cameraz = 20.0;
 
 void xaxis(double length)
 {
@@ -62,14 +65,14 @@ void wall(double thickness)
 void Initialize() {
     glMatrixMode(GL_PROJECTION); // set the view volume shape
     glLoadIdentity();
-    glOrtho(-10.0,10.0,-10.0,10.0,-10.0,10.0);
-    gluPerspective(60.0, 1.0, 0.0, 20.0);
+//    glOrtho(-10.0,10.0,-10.0,10.0,-10.0,10.0);
+    gluPerspective(45.0, 1.33, 0.5, 48.0);
     glMatrixMode(GL_MODELVIEW); // position and aim the camera
     glLoadIdentity();
-//    gluLookAt(0.0,0.0,1.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through z-axis
-//    gluLookAt(1.0,0.0,0.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through x-axis
-//    gluLookAt(0.0,1.0,0.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through y-axis
-    gluLookAt(1.0,1.0,1.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look 3D
+//    gluLookAt(0.0,0.0,20.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through z-axis
+//    gluLookAt(20.0,0.0,0.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through x-axis
+//    gluLookAt(0.0,20.0,0.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through y-axis
+    gluLookAt(camerax,cameray,cameraz, 0.0,0.0,0.0, 0.0,1.0,0.0); //look 3D
 
     glClear(GL_COLOR_BUFFER_BIT);
     
@@ -106,7 +109,7 @@ void DrawGround() {
 
 void DrawWalls() {
     glPushMatrix();
-    glTranslated(1.5, 0.0, 0.0);
+    glTranslated(2.0, 0.0, 2.0);
 
     //draw floor
     glPushMatrix();
@@ -171,8 +174,24 @@ void DrawWalls() {
 }
 
 void keyboard(unsigned char key, int x, int y) {
-    //code goes here...
-    //glutPostRedisplay();
+//    if(key == 'f' || key == 'F') {
+//        if(cameraz > 5.0) {
+//            cameraz -= 0.1;
+//        }
+//        if(cameray > 5.0) {
+//            cameray -= 0.1;
+//        }
+//        if(camerax > 5.0) {
+//            camerax -= 0.1;
+//        }
+//    }
+//    if(key == 'l' || key == 'L') {
+//        if(camerax > 2.0) {
+//            camerax -= 0.1;
+//        }
+//    }
+//
+//    glutPostRedisplay();
 }
 
 void Display() {
