@@ -66,10 +66,10 @@ void Initialize() {
     gluPerspective(60.0, 1.0, 0.0, 20.0);
     glMatrixMode(GL_MODELVIEW); // position and aim the camera
     glLoadIdentity();
-    gluLookAt(0.0,0.0,1.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through z-axis
+//    gluLookAt(0.0,0.0,1.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through z-axis
 //    gluLookAt(1.0,0.0,0.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through x-axis
 //    gluLookAt(0.0,1.0,0.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through y-axis
-//    gluLookAt(1.0,1.0,1.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look 3D
+    gluLookAt(1.0,1.0,1.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look 3D
 
     glClear(GL_COLOR_BUFFER_BIT);
     
