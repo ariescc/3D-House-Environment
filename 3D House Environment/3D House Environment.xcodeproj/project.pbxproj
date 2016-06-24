@@ -29,6 +29,7 @@
 		289242121D19583C0070C009 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		289242191D1958630070C009 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		2892421A1D1958630070C009 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		289242201D1D75D00070C009 /* Wall Texture.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = "Wall Texture.bmp"; path = "../../../../../../Users/apple/Desktop/Wall Texture.bmp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,9 +66,18 @@
 		289242111D19583C0070C009 /* 3D House Environment */ = {
 			isa = PBXGroup;
 			children = (
+				2892421F1D1D75C00070C009 /* Images */,
 				289242121D19583C0070C009 /* main.cpp */,
 			);
 			path = "3D House Environment";
+			sourceTree = "<group>";
+		};
+		2892421F1D1D75C00070C009 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				289242201D1D75D00070C009 /* Wall Texture.bmp */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

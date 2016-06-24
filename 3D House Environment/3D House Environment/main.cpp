@@ -4,9 +4,9 @@
 #include <OpenGl/glu.h>
 #include <GLUT/glut.h>
 
-double camerax = 20.0;
+double camerax = 0.0;
 double cameray = 20.0;
-double cameraz = 20.0;
+double cameraz = 15.0;
 
 void xaxis(double length)
 {
@@ -58,7 +58,7 @@ void wall(double thickness)
     glPushMatrix();
     glTranslated(0.5,.5*thickness,0.5);
     glScaled(1.0,thickness,1.0);
-    glutSolidCube(1.0);
+    glutSolidCube(1);
     glPopMatrix();
 }
 
@@ -97,101 +97,130 @@ void Initialize() {
 
 void DrawGround() {
     glPushMatrix();
+    glScaled(1.5, 1.0, 1.5);
+    glTranslated(-2.0, 0.0, -2.0);
     glBegin(GL_QUADS);
     glColor3d(0.0, .390625, 0.0);
-    glVertex3d(0.0, 0.0, 0.0);
-    glVertex3d(8.0, 0.0, 0.0);
+    glVertex3d(-4.0, 0.0, -4.0);
+    glVertex3d(8.0, 0.0, -4.0);
     glVertex3d(8.0, 0.0, 8.0);
-    glVertex3d(0.0, 0.0, 8.0);
+    glVertex3d(-4.0, 0.0, 8.0);
     glEnd();
     glPopMatrix();
 }
 
 void DrawWalls() {
     glPushMatrix();
-    glTranslated(2.0, 0.0, 2.0);
-
+    glTranslated(-4.0, 0.0, -5.3);
+    glScaled(2.0, 2.0, 2.0);
+   
     //draw floor
     glPushMatrix();
     glColor3d(.625, .3203125, .17578125);
-    glScaled(4.0,1.0,4.0);
+    glScaled(4.0,1.0,5.5);
     wall(.05);
-    glPopMatrix();
     
     //draw back wall
     glPushMatrix();
-    glColor3d(.82421875, .82421875, .82421875);
+    glColor3d(.0, .0, .0);
     glRotated(-90, 1.0, 0.0, 0.0);
-    glScaled(4.0,1.0,3.0);
+    glScaled(1.0, 0.1, 3.0);
     wall(.05);
-    glPopMatrix();
-
+    
     //draw left wall
     glPushMatrix();
     glColor3d(2.0, .82421875, .82421875);
     glRotated(90.0, 0.0, 0.0, 1.0);
-    glScaled(3.0,1.0,4.0);
+    glTranslated(-10.1, 0.0, .0);
+    glScaled(10.1, 0.2, 1.0);
     wall(.05);
-    glPopMatrix();
 
     //draw right wall
     glPushMatrix();
     glColor3d(2.0, .82421875, .82421875);
-    glRotated(90.0, 0.0, 0.0, 1.0);
-    glScaled(3.0,1.0,4.0);
-    glTranslated(0.0, -4, 0.0);
+    glTranslated(0.0, -5.0, 0.0);
+    wall(.05);
+    
+    glPopMatrix();
+    glPopMatrix();
+    
+    
+    
+    
+    //draw middle wall
+    glPushMatrix();
+    glColor3d(.82421875, .82421875, .82421875);
+    glTranslated(0.0, -4.8, 0.0);
+    wall(.05);
+    
+    //draw middle door
+    glPushMatrix();
+    glColor3d(0.0, 0.0, .82421875);
+    glTranslated(.4, 0.0, 0.0);
+    glScaled(0.2, 1.0, 0.65);
     wall(.05);
     glPopMatrix();
     
     //draw front wall
     glPushMatrix();
     glColor3d(.82421875, .82421875, .82421875);
-    glRotated(-90.0, 1.0, 0.0, 0.0);
-    glScaled(1.5,1.0,3.0);
-    glTranslated(0.0, -4.0, 0.0);
+    glTranslated(0.0, -5.25, 0.0);
+    wall(.05);
+    
+    //draw front door
+    glPushMatrix();
+    glColor3d(0.0, 0.0, .82421875);
+    glTranslated(.4, 0.0, 0.0);
+    glScaled(0.2, 1.0, 0.65);
     wall(.05);
     glPopMatrix();
     
-    glPushMatrix();
-    glColor3d(.82421875, .82421875, .82421875);
-    glRotated(-90.0, 1.0, 0.0, 0.0);
-    glScaled(1.5,1.0,3.0);
-    glTranslated(1.6, -4.0, 0.0);
-    wall(.05);
+    glPopMatrix();
+    glPopMatrix();
     glPopMatrix();
     
     //draw ceiling
     glPushMatrix();
     glColor3d(.625, .3203125, .17578125);
-    glScaled(4.0,1.0,4.0);
     glTranslated(0.0, 3.0, 0.0);
     wall(.05);
     glPopMatrix();
     
-    
+    glPopMatrix();
     glPopMatrix();
 
 }
 
+
+
 void keyboard(unsigned char key, int x, int y) {
-//    if(key == 'f' || key == 'F') {
-//        if(cameraz > 5.0) {
-//            cameraz -= 0.1;
-//        }
-//        if(cameray > 5.0) {
-//            cameray -= 0.1;
-//        }
-//        if(camerax > 5.0) {
-//            camerax -= 0.1;
-//        }
-//    }
-//    if(key == 'l' || key == 'L') {
-//        if(camerax > 2.0) {
-//            camerax -= 0.1;
-//        }
-//    }
-//
-//    glutPostRedisplay();
+    if(key == 'l' || key == 'L') {
+            camerax -= 0.2;
+    }
+    if(key == 'r' || key == 'R') {
+            camerax += 0.2;
+    }
+    if(key == 'd' || key == 'D') {
+        if (cameray > 1.0) {
+            cameray -= 0.2;
+        }
+    }
+    if(key == 'u' || key == 'U') {
+        if (cameray < 20.0) {
+            cameray += 0.2;
+        }
+    }
+    if(key == 'f' || key == 'F') {
+            cameraz -= 0.2;
+    }
+    if(key == 'b' || key == 'b') {
+        if (cameraz < 20.0) {
+            cameraz += 0.2;
+        }
+    }
+    
+
+    glutPostRedisplay();
 }
 
 void Display() {
