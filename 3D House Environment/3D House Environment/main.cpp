@@ -4,7 +4,7 @@
 #include <OpenGl/glu.h>
 #include <GLUT/glut.h>
 
-double camerax = 0.0;
+double camerax = 15.0;
 double cameray = 20.0;
 double cameraz = 15.0;
 
@@ -127,26 +127,6 @@ void DrawWalls() {
     glScaled(1.0, 0.1, 3.0);
     wall(.05);
     
-    //draw left wall
-    glPushMatrix();
-    glColor3d(2.0, .82421875, .82421875);
-    glRotated(90.0, 0.0, 0.0, 1.0);
-    glTranslated(-10.1, 0.0, .0);
-    glScaled(10.1, 0.2, 1.0);
-    wall(.05);
-
-    //draw right wall
-    glPushMatrix();
-    glColor3d(2.0, .82421875, .82421875);
-    glTranslated(0.0, -5.0, 0.0);
-    wall(.05);
-    
-    glPopMatrix();
-    glPopMatrix();
-    
-    
-    
-    
     //draw middle wall
     glPushMatrix();
     glColor3d(.82421875, .82421875, .82421875);
@@ -160,6 +140,24 @@ void DrawWalls() {
     glScaled(0.2, 1.0, 0.65);
     wall(.05);
     glPopMatrix();
+    
+    //draw left wall
+    glPushMatrix();
+    glColor3d(2.0, .82421875, .82421875);
+    glRotated(90.0, 0.0, 0.0, 1.0);
+    glTranslated(-5.2, 0.0, .0);
+    glScaled(10.1, 0.2, 1.0);
+    wall(.05);
+    
+    //draw right wall
+    glPushMatrix();
+    glColor3d(2.0, .82421875, .82421875);
+    glTranslated(0.0, -5.0, 0.0);
+    wall(.05);
+    
+    glPopMatrix();
+    glPopMatrix();
+
     
     //draw front wall
     glPushMatrix();
@@ -175,18 +173,20 @@ void DrawWalls() {
     wall(.05);
     glPopMatrix();
     
-    glPopMatrix();
-    glPopMatrix();
-    glPopMatrix();
+    glPopMatrix(); //front wall
+    
+    glPopMatrix(); //middle wall
+    
+    glPopMatrix(); //back wall
     
     //draw ceiling
     glPushMatrix();
     glColor3d(.625, .3203125, .17578125);
     glTranslated(0.0, 3.0, 0.0);
     wall(.05);
-    glPopMatrix();
+    glPopMatrix(); //ceiling
     
-    glPopMatrix();
+    glPopMatrix(); //floor
     glPopMatrix();
 
 }
