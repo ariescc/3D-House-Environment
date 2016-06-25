@@ -1,8 +1,8 @@
-
+#include "stdafx.h"
+#include <stdlib.h>
+#include "glut.h"
+#include <math.h>
 #include <iostream>
-#include <OpenGl/gl.h>
-#include <OpenGl/glu.h>
-#include <GLUT/glut.h>
 
 double camerax = 15.0;
 double cameray = 20.0;
@@ -72,6 +72,7 @@ void Initialize() {
 //    gluLookAt(0.0,0.0,20.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through z-axis
 //    gluLookAt(20.0,0.0,0.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through x-axis
 //    gluLookAt(0.0,20.0,0.0, 0.0,0.0,0.0, 0.0,1.0,0.0); //look through y-axis
+//    gluLookAt(0,30,0, 0.0,0.0,0.0, 0.0,0.0,1.0); //look 3D
     gluLookAt(camerax,cameray,cameraz, 0.0,0.0,0.0, 0.0,1.0,0.0); //look 3D
 
     glClear(GL_COLOR_BUFFER_BIT);
@@ -109,6 +110,57 @@ void DrawGround() {
     glPopMatrix();
 }
 
+void tableLeg(double thick,double len)
+{
+	glPushMatrix();
+	glTranslated(0,len/2,0);
+	glScaled(thick,len,thick);
+	glutSolidCube(1.0);
+	glPopMatrix();
+}
+void jackpart()
+{ 
+	glPushMatrix();
+	glScaled(0.2,0.2,1.0);
+	glutSolidSphere(1,15,15);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(0,0,1.2);
+	glutSolidSphere(0.2,15,15);
+	glTranslated(0,0,-2.4);
+	glutSolidSphere(0.2,15,15);
+	glPopMatrix();
+}
+void jack(){
+	glPushMatrix();
+	jackpart();
+	glRotated(90.0,0,1,0);
+	jackpart();
+	glRotated(90.0,1,0,0);
+	jackpart();
+	glPopMatrix();
+}
+
+void table(double topWid,double topThick, double legThick,double legLen)
+{
+	//draw a table - atop and four legs
+	glPushMatrix();
+	glTranslated(0,legLen,0);
+	glScaled(topWid,topThick,topWid);
+	glutSolidCube(1.0);
+	glPopMatrix();
+	double dist=0.95*topWid/2.0-legThick/2.0;
+	glPushMatrix(); glTranslated(dist,0,dist);
+	tableLeg(legThick,legLen);
+	glTranslated(0,0,-2*dist);
+	tableLeg(legThick,legLen);
+	glTranslated(-2*dist,0,2*dist);
+	tableLeg(legThick,legLen);
+	glTranslated(0,0,-2*dist);
+	tableLeg(legThick,legLen);
+	glPopMatrix();
+}
+
 void DrawWalls() {
     glPushMatrix();
     glTranslated(-4.0, 0.0, -5.3);
@@ -119,14 +171,21 @@ void DrawWalls() {
     glColor3d(.625, .3203125, .17578125);
     glScaled(4.0,1.0,5.5);
     wall(.05);
-    
+
+	glPushMatrix();//red table in 2nd room
+	glColor3d(1.0, 0.0, 0.0);
+    glScaled(0.25,1,0.2);
+	glTranslated(1.5,0,1.5);
+	table(1,0.5,0.1,1);
+	glPopMatrix();
+
     //draw back wall
     glPushMatrix();
     glColor3d(.0, .0, .0);
     glRotated(-90, 1.0, 0.0, 0.0);
     glScaled(1.0, 0.1, 3.0);
     wall(.05);
-    
+
     //draw middle wall
     glPushMatrix();
     glColor3d(.82421875, .82421875, .82421875);
@@ -141,6 +200,45 @@ void DrawWalls() {
     wall(.05);
     glPopMatrix();
     
+	glPushMatrix();//ball in room 1
+	glColor3d(1.0, 0.0, 0.0);
+    glScaled(1.28,5,2);
+	glTranslated(0.2,-0.5,0.1);
+	glutSolidSphere(0.1,10,10);
+	glPopMatrix();
+
+	glPushMatrix();//teapot in room 1
+	glColor3d(0.0, 0.0, 1.0);
+	glRotated(90, 1.0, 0.0, 0.0);
+    glScaled(0.6,2,3);
+	glTranslated(1.4,0.08,1.5);
+	glutSolidTeapot(0.1);
+	glPopMatrix();
+
+	glPushMatrix();//shwyet le3ab atfal kda :D
+	glColor3d(0.0, 1.0, 0.0);
+	glRotated(90, 1.0, 0.0, 0.0);
+    glScaled(0.1,0.2,0.4);
+	glTranslated(1.3,1.0,2.0);
+	jack();
+	glPopMatrix();
+
+	glPushMatrix();
+	glColor3d(0.0, 1.0, 0.0);
+	glRotated(90, 1.0, 0.0, 0.0);
+    glScaled(0.1,0.2,0.4);
+	glTranslated(4.3,1.0,2.0);
+	jack();
+	glPopMatrix();
+
+	glPushMatrix();
+	glColor3d(0.0, 1.0, 0.0);
+	glRotated(90, 1.0, 0.0, 0.0);
+    glScaled(0.1,0.2,0.4);
+	glTranslated(5.3,1.0,4.0);
+	jack();
+	glPopMatrix();
+
     //draw left wall
     glPushMatrix();
     glColor3d(2.0, .82421875, .82421875);
@@ -179,16 +277,17 @@ void DrawWalls() {
     
     glPopMatrix(); //back wall
     
-    //draw ceiling
-    glPushMatrix();
-    glColor3d(.625, .3203125, .17578125);
-    glTranslated(0.0, 3.0, 0.0);
-    wall(.05);
-    glPopMatrix(); //ceiling
+    ////draw ceiling
+    //glPushMatrix();
+    //glColor3d(.625, .3203125, .17578125);
+    //glTranslated(0.0, 3.0, 0.0);
+    //wall(.05);
+    //glPopMatrix(); //ceiling
     
     glPopMatrix(); //floor
     glPopMatrix();
 
+	
 }
 
 
@@ -213,7 +312,7 @@ void keyboard(unsigned char key, int x, int y) {
     if(key == 'f' || key == 'F') {
             cameraz -= 0.2;
     }
-    if(key == 'b' || key == 'b') {
+    if(key == 'b' || key == 'B') {
         if (cameraz < 20.0) {
             cameraz += 0.2;
         }
@@ -230,7 +329,7 @@ void Display() {
     glFlush();
 }
 
-int main(int argc, char ** argv) {
+void main(int argc, char ** argv) {
     glutInit(&argc,argv);
     glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
     glutInitWindowSize(1000,600);
@@ -240,5 +339,5 @@ int main(int argc, char ** argv) {
     glClearColor(1.0f,1.0f,1.0f,1.0f);
     glutKeyboardFunc(keyboard);
     glutMainLoop();
-    return 0;
 }
+
